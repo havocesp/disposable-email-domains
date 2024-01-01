@@ -34,8 +34,7 @@ def check_for_public_suffixes(filename):
         psl = PublicSuffixList(latest)
     for i, line in enumerate(lines):
         current_line = line.strip()
-        public_suffix = psl.publicsuffix(current_line)
-        if public_suffix == current_line:
+        if (public_suffix := psl.publicsuffix(current_line)) == current_line:
             print(
                 f"The line number {i+1} contains just a public suffix: {current_line}"
             )
@@ -51,8 +50,7 @@ def check_for_public_suffixes(filename):
 
 def check_for_non_lowercase(filename):
     lines = files[filename]
-    invalid = set(lines) - set(line.lower() for line in lines)
-    if invalid:
+    if invalid := set(lines) - set(line.lower() for line in lines):
         print("The following domains should be lowercased in {!r}:".format(filename))
         for line in sorted(invalid):
             print("* {}".format(line))
@@ -61,8 +59,7 @@ def check_for_non_lowercase(filename):
 
 def check_for_duplicates(filename):
     lines = files[filename]
-    count = Counter(lines) - Counter(set(lines))
-    if count:
+    if count := Counter(lines) - Counter(set(lines)):
         print("The following domains appear twice in {!r}:".format(filename))
         for line in sorted(count):
             print("* {}".format(line))
@@ -81,8 +78,7 @@ def check_sort_order(filename):
 def check_for_intersection(filename_a, filename_b):
     a = files[filename_a]
     b = files[filename_b]
-    intersection = set(a) & set(b)
-    if intersection:
+    if intersection := set(a) & set(b):
         print("The following domains appear in both lists:")
         for line in sorted(intersection):
             print("* {}".format(line))
