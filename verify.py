@@ -21,7 +21,7 @@ files = {
 
 def download_suffixes():
     with open("public_suffix_list.dat", "wb") as file:
-        response = get("https://publicsuffix.org/list/public_suffix_list.dat")
+        response = get("https://publicsuffix.org/list/public_suffix_list.dat", timeout=60)
         file.write(response.content)
 
 
